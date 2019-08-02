@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+.ml-240 {
+    margin-left: 200px;
+}
+
+.container {
+    margin-top: 20px !important;
+}
