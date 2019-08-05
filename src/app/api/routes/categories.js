@@ -18,17 +18,22 @@ app.get('/:category', (req, res) => {
 
 app.post('/', (req, res) => {
     const body = req.body;
+    let categories = [];
 
-    body.tech_name = body.name.toLowerCase().replace(' ', '');
+    console.log(body);
 
-    const category = new Category({
-        ...body
-    });
+    for (let i = 0; i < body.length; i++) {
+        body[i].tech_name = body[i].name.toLowerCase().replace(' ', '');
+        body[i].name = body[i].name;
 
-    category.save((err, data) => {
+        categories.push(body[i]);
+    }
+
+    const category = new Category();
+
+    category.collection.insert(categories, (err, data) => {
         return res.json(data);
-    });
-
+    })
 });
 
 module.exports = app;
