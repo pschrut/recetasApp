@@ -31,7 +31,7 @@ app.post('/', (req, res) => {
 
     const category = new Category();
 
-    category.collection.insert(categories, (err, data) => {
+    category.collection.insertMany(categories, (err, data) => {
         return res.json(data);
     })
 });

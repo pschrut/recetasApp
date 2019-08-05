@@ -1,6 +1,8 @@
 process.env.PORT = process.env.PORT || 3000;
+process.env.MONGO_URI = 'mongodb+srv://pschrut:zQFjTvqkf0lI6xpK@cluster0-g4cpb.mongodb.net/recipies?retryWrites=true&w=majority';
+process.env.NODE_ENV = 'prd';
 
-process.env.NODE_ENV = process.env.NODE_ENV ||  'dev';
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 let urlDB;
 
