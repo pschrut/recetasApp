@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { SectionsService } from '../../services/sections.service';
+import { Category } from '../../models/category.model';
 
 @Component({
   selector: 'app-settings',
@@ -6,10 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+  tabSelected: string = 'categories';
+  categories: Category[] = [];
 
-  constructor() { }
+  constructor(public sectionsService: SectionsService) { }
 
   ngOnInit() {
+  }
+
+  getCategories(event) {
+    this.categories.push(event);
+  }
+
+  onSave() {
+    this.sectionsService.addCategory(this.categories).subscribe((data: any) => {
+      this.categories = [];
+    });
   }
 
 }

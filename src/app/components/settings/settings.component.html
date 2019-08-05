@@ -1,5 +1,5 @@
 <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" [ngClass]="{ 'modal-xl': tabSelected === 'recipies' }" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="settingsModalLabel">Configuración</h5>
@@ -10,15 +10,15 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" id="categories-tab" data-toggle="tab" href="#categories" role="tab" aria-controls="categories" aria-selected="true">Categorías</a>
+                        <a class="nav-link active" (click)="tabSelected = 'categories'" id="categories-tab" data-toggle="tab" href="#categories" role="tab" aria-controls="categories" aria-selected="true">Categorías</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="recipies-tab" data-toggle="tab" href="#recipies" role="tab" aria-controls="recipies" aria-selected="false">Recetas</a>
+                        <a class="nav-link" (click)="tabSelected = 'recipies'" id="recipies-tab" data-toggle="tab" href="#recipies" role="tab" aria-controls="recipies" aria-selected="false">Recetas</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="categories" role="tabpanel" aria-labelledby="categories-tab">
-                        <app-categories-config></app-categories-config>
+                        <app-categories-config (categoriesOutput)="getCategories($event)"></app-categories-config>
                     </div>
                     <div class="tab-pane fade" id="recipies" role="tabpanel" aria-labelledby="recipies-tab">
                         <div id="recipies">
@@ -29,7 +29,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" (click)="onSave()" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>

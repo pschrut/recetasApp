@@ -1,18 +1,14 @@
 export class Category {
     id?: string;
-    _name: string;
-    _techName: string;
+    name: string;
+    tech_name: string;
 
     constructor(name: string, techName: string) {
-        this._name = name;
-        this._techName = techName;
+        this.name = name;
+        this.tech_name = techName;
     }
 
-    get name(): string {
-        return this._name;
-    }
-
-    get techName(): string {
-        return this._techName;
+    public get techName() {
+        return this.tech_name;
     }
 }

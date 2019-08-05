@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SectionsService } from '../../../services/sections.service';
 import { Category } from '../../../models/category.model';
 
@@ -11,6 +11,8 @@ export class CategoriesConfigComponent implements OnInit {
   
   categories: Category[] = [];
 
+  @Output() categoriesOutput = new EventEmitter<Category>();
+
   constructor(public sectionsService: SectionsService) { }
 
   ngOnInit() {
@@ -19,10 +21,12 @@ export class CategoriesConfigComponent implements OnInit {
     });
   }
 
-  onSubmit(f) {
-    this.sectionsService.addCategory(f.value).subscribe((data: any) => {
-      f.reset();
-    });
+  onAdd(f) {
+    const category = new Category(f.value.name, null);
+
+    this.categories.push(category);
+    this.categoriesOutput.emit(category);
+    f.reset();
   }
 
 }

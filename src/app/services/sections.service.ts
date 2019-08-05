@@ -9,8 +9,6 @@ import { map } from 'rxjs/operators';
 export class SectionsService {
   _ENDPOINT: string = 'http://localhost:3000';
 
-  refillCategories = new EventEmitter();
-
   constructor(public http: HttpClient) { }
 
   getCategories() {
@@ -34,12 +32,8 @@ export class SectionsService {
     );
   }
 
-  addCategory(category: Category) {
-    return this.http.post(`http://localhost:3000/categories`, category).pipe(
-      map(data => {
-        console.log(data);
-        this.refillCategories.emit(data);
-      })
-    );
+  addCategory(categories: Category[]) {
+    console.log(categories);
+    return this.http.post(`${this._ENDPOINT}/categories`, categories);
   }
 }

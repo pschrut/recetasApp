@@ -15,13 +15,7 @@ export class NavbarComponent implements OnInit {
   constructor(public sectionsService: SectionsService) {
     this.sectionsService.getCategories().subscribe((data: any) => {
       this.categories = data;
-      console.log(this.categories);
     });
-
-    this.sectionsService.refillCategories.subscribe(data => {
-      this.categories.push(new Category(data.name, data.tech_name));
-    });
-
   }
 
   ngOnInit() {
