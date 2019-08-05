@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SectionsService {
-  _ENDPOINT: string = 'http://localhost:3000';
+  _ENDPOINT: string = 'https://recetario-app.herokuapp.com';
 
   constructor(public http: HttpClient) { }
 
