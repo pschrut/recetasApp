@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ContentPanelComponent } from './components/shared/content-panel/content-panel.component';
 import { HomeComponent } from './components/home/home.component';
-import { SettingsComponent } from './components/settings/settings.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -13,6 +13,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' + (window.location.pathname.split('/')[1] || '') }
+  ]
 })
 export class AppRoutingModule { }
