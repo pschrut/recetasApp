@@ -15,7 +15,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' + (window.location.pathname.split('/')[1] || '') }
+    //{ provide: APP_BASE_HREF, useValue: '/' + (window.location.pathname.split('/')[1] || '') }
   ]
 })
 export class AppRoutingModule { }
