@@ -1,7 +1,10 @@
 <ul class="list-group">
-    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" *ngFor="let category of categories">
+    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" [ngClass]="{ 'itemDelete': idsToDelete.indexOf(category.id) !== -1 }" *ngFor="let category of categories">
         {{ category.name }}
-        <i class="far fa-edit"></i>
+        <div class="awesome-icons">
+            <i class="fa fa-minus" (click)="addToDelete(category.id)"></i>&nbsp;
+            <i class="fa fa-edit"></i>
+        </div>
     </li>
 </ul>
 <hr>

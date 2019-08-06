@@ -10,6 +10,7 @@ import { Category } from '../../models/category.model';
 export class SettingsComponent implements OnInit {
   tabSelected: string = 'categories';
   categories: Category[] = [];
+  idsToDelete: string[] = [];
 
   constructor(public sectionsService: SectionsService) { }
 
@@ -20,10 +21,29 @@ export class SettingsComponent implements OnInit {
     this.categories.push(event);
   }
 
-  onSave() {
-    this.sectionsService.addCategory(this.categories).subscribe((data: any) => {
-      this.categories = [];
-    });
+  getIdsToDelete(event) {
+    this.idsToDelete.push(event);
   }
 
+  onSave() {
+    this.addCategories();
+    this.deleteCategories();
+  }
+
+  private addCategories() {
+    if (this.categories.length > 0) {
+      this.sectionsService.addCategory(this.categories).subscribe((data: any) => {
+        this.categories = [];
+      });
+    }
+  }
+
+  private deleteCategories() {
+    if (this.idsToDelete.length > 0) {
+      console.log(this.idsToDelete);
+      this.sectionsService.deleteCategories(this.idsToDelete).subscribe((data: any) => {
+        this.idsToDelete = [];
+      });
+    }
+  }
 }
