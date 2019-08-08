@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { SectionsService } from '../../services/sections.service';
+import { Component, OnInit } from '@angular/core';
+import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category.model';
 
 @Component({
@@ -11,8 +11,9 @@ export class SettingsComponent implements OnInit {
   tabSelected: string = 'categories';
   categories: Category[] = [];
   idsToDelete: string[] = [];
+  changes: boolean = false;
 
-  constructor(public sectionsService: SectionsService) { }
+  constructor(public categoriesService: CategoriesService) { }
 
   ngOnInit() {
   }
@@ -32,7 +33,7 @@ export class SettingsComponent implements OnInit {
 
   private addCategories() {
     if (this.categories.length > 0) {
-      this.sectionsService.addCategory(this.categories).subscribe((data: any) => {
+      this.categoriesService.addCategory(this.categories).subscribe((data: any) => {
         this.categories = [];
       });
     }
@@ -41,7 +42,7 @@ export class SettingsComponent implements OnInit {
   private deleteCategories() {
     if (this.idsToDelete.length > 0) {
       console.log(this.idsToDelete);
-      this.sectionsService.deleteCategories(this.idsToDelete).subscribe((data: any) => {
+      this.categoriesService.deleteCategories(this.idsToDelete).subscribe((data: any) => {
         this.idsToDelete = [];
       });
     }

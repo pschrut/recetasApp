@@ -1,5 +1,5 @@
-.fa-minus {
-    color: red;
+.fa-undo {
+    color: #FF0C0C;
 }
 
 .awesome-icons {
@@ -7,5 +7,17 @@
 }
 
 .itemDelete {
-    background-color: red;
+    background-color: #BED9FF;
+}
+
+.itemAdded {
+    background-color: #A4EC93;
+}
+
+.fa-check {
+    color: #076BFF;
+}
+
+.edit {
+    min-width: 85%;
 }

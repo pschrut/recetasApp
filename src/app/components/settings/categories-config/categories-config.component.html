@@ -1,9 +1,12 @@
 <ul class="list-group">
-    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" [ngClass]="{ 'itemDelete': idsToDelete.indexOf(category.id) !== -1 }" *ngFor="let category of categories">
-        {{ category.name }}
+    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (dblclick)="categoryToEdit(category)" [ngClass]="getRowClass(category)" *ngFor="let category of categories">
+        <span *ngIf="categoryEdit !== category">{{ category.name }}</span>
+        <input class="edit" #edit (keyup.enter)="confirmEdit(category)" *ngIf="categoryEdit === category" type="text" [value]="category.name">
         <div class="awesome-icons">
-            <i class="fa fa-minus" (click)="addToDelete(category.id)"></i>&nbsp;
-            <i class="fa fa-edit"></i>
+            <i class="fas fa-undo" *ngIf="getDeleteArray(category) !== -1" (click)="removeFromDelete(category)"></i>
+            <i class="far fa-trash-alt" *ngIf="getDeleteArray(category) === -1" (click)="addToDelete(category)"></i>&nbsp;
+            <i class="fa fa-edit" *ngIf="categoryEdit.name !== category.name" (click)="categoryToEdit(category)"></i>
+            <i class="fas fa-check" (click)="confirmEdit(category)" *ngIf="categoryEdit.name === category.name"></i>
         </div>
     </li>
 </ul>
@@ -12,5 +15,5 @@
     <div class="form-group mx-sm-3 mb-2">
         <input type="text" ngModel name="name" class="form-control" id="category" placeholder="Nueva categoría" required>
     </div>
-    <button type="submit" class="btn btn-primary mb-2">Agregar</button>
+    <button [disabled]="f.invalid" type="submit" class="btn btn-primary mb-2">Agregar</button>
 </form>

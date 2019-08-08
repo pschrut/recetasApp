@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SectionsService } from '../../../services/sections.service';
+import { CategoriesService } from '../../../services/categories.service';
 import { Category } from '../../../models/category.model';
 
 @Component({
@@ -11,12 +11,12 @@ import { Category } from '../../../models/category.model';
 export class ContentPanelComponent implements OnInit {
   sectionObj: Category = new Category(null, null);
 
-  constructor(public activatedRoute: ActivatedRoute, public sectionsService: SectionsService) {
+  constructor(public activatedRoute: ActivatedRoute, public categoriesService: CategoriesService) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      this.sectionsService.getCategory(params.category).subscribe(((category: any) => {
+      this.categoriesService.getCategory(params.category).subscribe(((category: any) => {
         this.sectionObj = category;
       }));
     });

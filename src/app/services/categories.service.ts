@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SectionsService {
+export class CategoriesService {
   _ENDPOINT: string = environment.API_ENDPOINT;
 
   constructor(public http: HttpClient) {
@@ -40,5 +40,9 @@ export class SectionsService {
 
   deleteCategories(ids: string[]) {
     return this.http.post(`${this._ENDPOINT}/categories/delete`, { ids });
+  }
+
+  editCategory(category: Category) {
+    return this.http.put(`${this._ENDPOINT}/categories/${category.id}`, category);
   }
 }

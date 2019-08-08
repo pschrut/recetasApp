@@ -8,6 +8,11 @@
     top: -10px;
 }
 
+.floater-notification {
+    position: relative;
+    left: -10px;
+}
+
 .bg-gradient-primary {
     background: rgba(183, 222, 237, 1);
     background: -moz-linear-gradient(left, rgba(183, 222, 237, 1) 0%, rgba(54, 143, 173, 1) 0%, rgba(183, 222, 237, 1) 100%);
