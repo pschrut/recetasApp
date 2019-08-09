@@ -17,7 +17,7 @@ export class CategoriesConfigComponent implements OnInit, OnChanges {
   @ViewChild('edit', { static: false }) edit: ElementRef;
 
   @Input() saved: boolean;
-  @Output() categoriesOutput = new EventEmitter<Category>();
+  @Output() categoriesOutput = new EventEmitter<Category | number>();
   @Output() idsToDeleteOutput = new EventEmitter<string>();
   @Output() changes = new EventEmitter<boolean>();
 
@@ -39,7 +39,6 @@ export class CategoriesConfigComponent implements OnInit, OnChanges {
 
   onAdd(f) {
     const category = new Category(f.value.name, null, null, true);
-
     this.categories.push(category);
     this.categoriesOutput.emit(category);
     this.changesEmitter();
@@ -48,7 +47,9 @@ export class CategoriesConfigComponent implements OnInit, OnChanges {
 
   addToDelete(category: Category) {
     if (category.id === null) {
-      this.categories.splice(this.getDeleteArray(category), 1);
+      const categoryIndex = this.getDeleteArray(category);
+      this.categories.splice(categoryIndex, 1);
+      this.categoriesOutput.emit(categoryIndex);
     } else {
       this.idsToDelete.push(category.id);
       this.idsToDeleteOutput.emit(category.id);

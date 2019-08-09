@@ -1,16 +1,17 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Category } from '../models/category.model';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
   _ENDPOINT: string = environment.API_ENDPOINT;
-  getCategoriesObs: EventEmitter<boolean> = new EventEmitter();
-  pendingChanges: EventEmitter<boolean> = new EventEmitter();
+  getCategoriesObs: Subject<boolean> = new Subject();
+  pendingChanges: Subject<boolean> = new Subject();
 
   constructor(public http: HttpClient) {
   }
@@ -38,28 +39,16 @@ export class CategoriesService {
   }
 
   addCategory(categories: Category[]) {
-    this.getCategoriesObs.emit(true);
-    return this.http.post(`${this._ENDPOINT}/categories`, categories).pipe(
-      tap(() => {
-        this.getCategoriesObs.emit(true);
-      })
-    );
+    this.getCategoriesObs.next(true);
+    return this.http.post(`${this._ENDPOINT}/categories`, categories);
   }
 
   deleteCategories(ids: string[]) {
-    return this.http.post(`${this._ENDPOINT}/categories/delete`, { ids }).pipe(
-      tap(() => {
-        this.getCategoriesObs.emit(true);
-      })
-    );
+    return this.http.post(`${this._ENDPOINT}/categories/delete`, { ids });
   }
 
   editCategory(category: Category) {
-    this.getCategoriesObs.emit(true);
-    return this.http.put(`${this._ENDPOINT}/categories/${category.id}`, category).pipe(
-      tap(() => {
-        this.getCategoriesObs.emit(true);
-      })
-    );
+    this.getCategoriesObs.next(true);
+    return this.http.put(`${this._ENDPOINT}/categories/${category.id}`, category);
   }
 }

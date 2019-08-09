@@ -3,6 +3,8 @@ import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category.model';
 import { forkJoin } from 'rxjs';
 
+declare var $: any;
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -20,13 +22,17 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     $('#settingsModal').on('hidden.bs.modal', () => {
-      this.categoriesService.pendingChanges.emit(!this.saved);
+      this.categoriesService.pendingChanges.next(!this.saved);
     });
   }
 
   getCategories(event) {
-    this.newCategories.push(event);
-    this.saved = false;
+    if (event instanceof Category) {
+      this.newCategories.push(event);
+      this.saved = false;
+    } else {
+      this.newCategories.splice(event, 1);
+    }
   }
 
   getIdsToDelete(event) {
@@ -52,6 +58,7 @@ export class SettingsComponent implements OnInit {
     this.changes = false;
     this.loading = false;
     this.saved = true;
-    this.categoriesService.pendingChanges.emit(!this.saved);
+    this.categoriesService.getCategoriesObs.next(true);
+    this.categoriesService.pendingChanges.next(!this.saved);
   }
 }

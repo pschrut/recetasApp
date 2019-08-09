@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './components/shared/shared.module';
 import { HomeComponent } from './components/home/home.component';
 import { SettingsModule } from './components/settings/settings.module';
+import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    LoadingScreenComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Category } from '../../../models/category.model';
 import { CategoriesService } from '../../../services/categories.service';
 declare var $: any;
@@ -9,29 +9,26 @@ declare var $: any;
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  categories: Category[] = [];
+  @Input() categories: Category[] = [];
   pendingChanges: boolean;
 
   constructor(public categoriesService: CategoriesService) {
-    this.categoriesService.pendingChanges.subscribe((data) => {
-      this.pendingChanges = data;
-    });
-  }
-
-  ngOnInit() {
-    this.getCategoriesService();
-
-    this.categoriesService.getCategoriesObs.subscribe((data: boolean) => {
-      if (data) {
-        this.getCategoriesService();
+    this.categoriesService.pendingChanges.subscribe({
+      next: (data) => {
+        this.pendingChanges = data;
       }
     });
   }
 
-  getCategoriesService() {
-    this.categoriesService.getCategories().subscribe((data: any) => {
-      this.categories = data;
+  ngOnInit() {
+    this.categoriesService.getCategoriesObs.subscribe({
+      next: (data) => {
+        if (data) {
+          this.categoriesService.getCategories().subscribe((data: any) => {
+            this.categories = data;
+          });
+        }
+      }
     });
   }
 

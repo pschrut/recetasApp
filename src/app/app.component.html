@@ -1,5 +1,10 @@
-<app-navbar></app-navbar>
-<div class="container ml-240">
-    <router-outlet></router-outlet>
-    <app-settings></app-settings>
+<div *ngIf="loading; else app">
+    <app-loading-screen [completed]="completed"></app-loading-screen>
 </div>
+<ng-template #app>
+    <app-navbar [categories]="categories"></app-navbar>
+    <div class="container ml-240">
+        <router-outlet></router-outlet>
+        <app-settings></app-settings>
+    </div>
+</ng-template>
