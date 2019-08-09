@@ -12,13 +12,22 @@ export class NavbarComponent implements OnInit {
 
   categories: Category[] = [];
 
-  constructor(public categoriesService: CategoriesService) {
-    this.categoriesService.getCategories().subscribe((data: any) => {
-      this.categories = data;
+  constructor(public categoriesService: CategoriesService) { }
+
+  ngOnInit() {
+    this.getCategoriesService();
+
+    this.categoriesService.getCategoriesObs.subscribe((data: boolean) => {
+      if (data) {
+        this.getCategoriesService();
+      }
     });
   }
 
-  ngOnInit() {
+  getCategoriesService() {
+    this.categoriesService.getCategories().subscribe((data: any) => {
+      this.categories = data;
+    });
   }
 
   showSettingsModal() {

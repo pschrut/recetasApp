@@ -10,10 +10,11 @@ import { forkJoin } from 'rxjs';
 })
 export class SettingsComponent implements OnInit {
   tabSelected: string = 'categories';
-  categories: Category[] = [];
+  newCategories: Category[] = [];
   idsToDelete: string[] = [];
   changes: boolean = false;
   loading: boolean = false;
+  saved: boolean = false;
 
   constructor(public categoriesService: CategoriesService) { }
 
@@ -21,24 +22,28 @@ export class SettingsComponent implements OnInit {
   }
 
   getCategories(event) {
-    this.categories.push(event);
+    this.newCategories.push(event);
+    this.saved = false;
   }
 
   getIdsToDelete(event) {
     this.idsToDelete.push(event);
+    this.saved = false;
   }
 
   onSave() {
     this.loading = true;
     const saveServices = forkJoin(
-      this.categoriesService.addCategory(this.categories),
+      this.categoriesService.addCategory(this.newCategories),
       this.categoriesService.deleteCategories(this.idsToDelete)
     );
 
     saveServices.subscribe((data: any) => {
-      this.categories = [];
+      this.newCategories = [];
       this.idsToDelete = [];
+      this.changes = false;
       this.loading = false;
+      this.saved = true;
     });
   }
 }

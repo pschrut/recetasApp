@@ -1,14 +1,13 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges, Output, EventEmitter, ViewChild, ElementRef, Input } from '@angular/core';
 import { CategoriesService } from '../../../services/categories.service';
 import { Category } from '../../../models/category.model';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-categories-config',
   templateUrl: './categories-config.component.html',
   styleUrls: ['./categories-config.component.css']
 })
-export class CategoriesConfigComponent implements OnInit {
+export class CategoriesConfigComponent implements OnInit, OnChanges {
 
   categories: Category[] = [];
   idsToDelete: string[] = [];
@@ -17,6 +16,7 @@ export class CategoriesConfigComponent implements OnInit {
 
   @ViewChild('edit', { static: false }) edit: ElementRef;
 
+  @Input() saved: boolean;
   @Output() categoriesOutput = new EventEmitter<Category>();
   @Output() idsToDeleteOutput = new EventEmitter<string>();
   @Output() changes = new EventEmitter<boolean>();
@@ -27,6 +27,14 @@ export class CategoriesConfigComponent implements OnInit {
     this.categoriesService.getCategories().subscribe(data => {
       this.categories = data;
     });
+  }
+
+  ngOnChanges() {
+    if (this.saved) {
+      this.categoriesService.getCategories().subscribe(data => {
+        this.categories = data;
+      });
+    }
   }
 
   onAdd(f) {
@@ -68,7 +76,6 @@ export class CategoriesConfigComponent implements OnInit {
         return true;
       }
     });
-
   }
 
   removeFromDelete(category: Category) {

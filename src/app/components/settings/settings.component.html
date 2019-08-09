@@ -18,7 +18,7 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="categories" role="tabpanel" aria-labelledby="categories-tab">
-                        <app-categories-config (idsToDeleteOutput)="getIdsToDelete($event)" (categoriesOutput)="getCategories($event)" (changes)="changes = $event"></app-categories-config>
+                        <app-categories-config [saved]="saved" (idsToDeleteOutput)="getIdsToDelete($event)" (categoriesOutput)="getCategories($event)" (changes)="changes = $event"></app-categories-config>
                     </div>
                     <div class="tab-pane fade" id="recipies" role="tabpanel" aria-labelledby="recipies-tab">
                         <div id="recipies">
