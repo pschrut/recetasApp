@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -12,6 +13,7 @@ export class SettingsComponent implements OnInit {
   categories: Category[] = [];
   idsToDelete: string[] = [];
   changes: boolean = false;
+  loading: boolean = false;
 
   constructor(public categoriesService: CategoriesService) { }
 
@@ -27,24 +29,16 @@ export class SettingsComponent implements OnInit {
   }
 
   onSave() {
-    this.addCategories();
-    this.deleteCategories();
-  }
+    this.loading = true;
+    const saveServices = forkJoin(
+      this.categoriesService.addCategory(this.categories),
+      this.categoriesService.deleteCategories(this.idsToDelete)
+    );
 
-  private addCategories() {
-    if (this.categories.length > 0) {
-      this.categoriesService.addCategory(this.categories).subscribe((data: any) => {
-        this.categories = [];
-      });
-    }
-  }
-
-  private deleteCategories() {
-    if (this.idsToDelete.length > 0) {
-      console.log(this.idsToDelete);
-      this.categoriesService.deleteCategories(this.idsToDelete).subscribe((data: any) => {
-        this.idsToDelete = [];
-      });
-    }
+    saveServices.subscribe((data: any) => {
+      this.categories = [];
+      this.idsToDelete = [];
+      this.loading = false;
+    });
   }
 }

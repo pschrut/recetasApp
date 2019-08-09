@@ -29,7 +29,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" [disabled]="!changes" (click)="onSave()" class="btn btn-primary">Guardar</button>
+                <button type="button" *ngIf="!loading" [disabled]="!changes" (click)="onSave()" class="btn btn-primary">Guardar</button>
+                <button type="button" *ngIf="loading" disabled class="btn btn-primary">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Guardando...
+                </button>
             </div>
         </div>
     </div>
