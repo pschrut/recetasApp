@@ -19,6 +19,9 @@ export class SettingsComponent implements OnInit {
   constructor(public categoriesService: CategoriesService) { }
 
   ngOnInit() {
+    $('#settingsModal').on('hidden.bs.modal', () => {
+      this.categoriesService.pendingChanges.emit(!this.saved);
+    });
   }
 
   getCategories(event) {
@@ -39,11 +42,16 @@ export class SettingsComponent implements OnInit {
     );
 
     saveServices.subscribe((data: any) => {
-      this.newCategories = [];
-      this.idsToDelete = [];
-      this.changes = false;
-      this.loading = false;
-      this.saved = true;
+      this.setInitialState();
     });
+  }
+
+  setInitialState() {
+    this.newCategories = [];
+    this.idsToDelete = [];
+    this.changes = false;
+    this.loading = false;
+    this.saved = true;
+    this.categoriesService.pendingChanges.emit(!this.saved);
   }
 }

@@ -21,7 +21,7 @@
         </form>
         <button class="btn m-3 p-1 text-white" (click)="showSettingsModal()">
             <i class="fas fa-cog fa-2x"></i>
-            <span class="badge badge-danger floater-notification">
+            <span *ngIf="pendingChanges" class="badge badge-danger floater-notification">
                 <i class="fas fa-exclamation"></i>
             </span>
         </button>

@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 export class CategoriesService {
   _ENDPOINT: string = environment.API_ENDPOINT;
   getCategoriesObs: EventEmitter<boolean> = new EventEmitter();
+  pendingChanges: EventEmitter<boolean> = new EventEmitter();
 
   constructor(public http: HttpClient) {
   }

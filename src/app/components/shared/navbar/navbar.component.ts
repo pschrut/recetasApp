@@ -11,8 +11,13 @@ declare var $: any;
 export class NavbarComponent implements OnInit {
 
   categories: Category[] = [];
+  pendingChanges: boolean;
 
-  constructor(public categoriesService: CategoriesService) { }
+  constructor(public categoriesService: CategoriesService) {
+    this.categoriesService.pendingChanges.subscribe((data) => {
+      this.pendingChanges = data;
+    });
+  }
 
   ngOnInit() {
     this.getCategoriesService();
