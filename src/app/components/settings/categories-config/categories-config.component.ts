@@ -63,6 +63,8 @@ export class CategoriesConfigComponent implements OnInit {
         this.categoriesService.editCategory(item).subscribe((data: any) => {
           console.log(data);
         });
+
+        return true;
       }
     });
 
