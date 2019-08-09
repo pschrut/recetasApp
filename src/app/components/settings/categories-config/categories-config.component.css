@@ -14,7 +14,8 @@
     background-color: #A4EC93;
 }
 
-.fa-check {
+.fa-check,
+.fa-spinner {
     color: #076BFF;
 }
 

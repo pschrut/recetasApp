@@ -12,7 +12,8 @@ export class CategoriesConfigComponent implements OnInit {
 
   categories: Category[] = [];
   idsToDelete: string[] = [];
-  categoryEdit: Category = new Category(null, null);;
+  categoryEdit: Category = new Category(null, null);
+  loading: boolean = false;
 
   @ViewChild('edit', { static: false }) edit: ElementRef;
 
@@ -55,13 +56,13 @@ export class CategoriesConfigComponent implements OnInit {
   }
 
   confirmEdit(category: Category) {
-    this.categoryEdit = new Category(null, null);
-
     this.categories.find((item: Category) => {
       if (item.name === category.name) {
         item.name = this.edit.nativeElement.value;
+        this.loading = true;
         this.categoriesService.editCategory(item).subscribe((data: any) => {
-          console.log(data);
+          this.categoryEdit = new Category(null, null);
+          this.loading = false;
         });
 
         return true;

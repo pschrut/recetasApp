@@ -5,8 +5,9 @@
         <div class="awesome-icons">
             <i class="fas fa-undo" *ngIf="getDeleteArray(category) !== -1" (click)="removeFromDelete(category)"></i>
             <i class="far fa-trash-alt" *ngIf="getDeleteArray(category) === -1" (click)="addToDelete(category)"></i>&nbsp;
-            <i class="fa fa-edit" *ngIf="categoryEdit.name !== category.name" (click)="categoryToEdit(category)"></i>
-            <i class="fas fa-check" (click)="confirmEdit(category)" *ngIf="categoryEdit.name === category.name"></i>
+            <i class="fa fa-edit" *ngIf="categoryEdit.name !== category.name && !loading" (click)="categoryToEdit(category)"></i>
+            <i class="fas fa-check" (click)="confirmEdit(category)" *ngIf="categoryEdit.name === category.name && !loading"></i>
+            <i class="fas fa-spinner fa-spin" *ngIf="categoryEdit.name === category.name && loading === true"></i>
         </div>
     </li>
 </ul>
